@@ -1,0 +1,32 @@
+name: React App Build Pipeline
+
+# 1. THE TRIGGER: The assignment requires it to run ONLY on the development branch
+on:
+  push:
+    branches:
+      - development
+
+# 2. THE JOB
+jobs:
+  build-and-test:
+    # 3. THE RUNNER: This specifically targets the EC2 instance you just set up!
+    runs-on: self-hosted
+
+    # 4. THE STEPS: Sequential tasks executed by your runner
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests (if they exist)
+        run: npm test --if-present
+
+      - name: Build the React application
+        run: npm run build
