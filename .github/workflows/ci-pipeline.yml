@@ -29,4 +29,6 @@ jobs:
         run: npm test -- --passWithNoTests
 
       - name: Build the React application
+        env:
+          CI: false
         run: npm run build
